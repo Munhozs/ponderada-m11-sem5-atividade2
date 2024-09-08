@@ -1,2 +1,12 @@
-# ponderada-m11-sem5-atividade2
-Atividade Ponderada Tradução Automática
+# Atividade Ponderada Tradução Automática
+
+1) Tente valores diferentes do argumento num_examples na funçãoload_data_nmt. Como isso afeta os tamanhos do vocabulário do idioma de origem e do idioma de destino?
+
+Partindo do entendimento inicial de que cada valor do vetor representa um token, que o conjunto X representa o idioma de origem - inglês - e Y as traduções - francês, além de que os valores iguais no final do vetor indicam os paddings, ou seja, valores adicionados para os vetores terem o mesmo tamanho (somente números diferentes são considerados representativos), a seguinte análise pode ser feita:
+
+Tendo em vista que o parâmetro "num_examples" indica o número de pares de sentenças incluídas no treinamento do modelo, pode-se entender que quanto maior o número de exemplos, mais diversos e ricos serão os vocabulários, e, consequentemente, com mais tokens. Isso é evidente na comparação da inclusão de somente 6 pares de sentença com 6000. Enquanto 6 conjuntos de frases representam um vetor de [3 3] em inglês e [3 4] em francês, com valores pequenos, como 6, 3, 5 e 4, 2 representando os tokens, com 6000 conjuntos a figura muda: vetores de  [4 4] em inglês e [5 8] em francês, com um valor extremamente maior de tokens: 441, 269, 540 e 652, 794, 1252, a exemplo, deixando claro que quanto maior o valor de num_examples maiores serão os vocabulários dos idiomas. Nessa perspectiva, cabe ressaltar que com poucos exemplos (valor pequeno de num_examples) o vocabulário de ambos idiomas será menor, já que o modelo não terá tido contado com diferentes palavras e, dessa forma, conseguirá reconhecer somente palavras muito específicas em um contexto mais amplo, não sendo capaz de fazer uma tradução automática satisfatória.
+
+2) O texto em alguns idiomas, como chinês e japonês, não tem indicadores de limite de palavras (por exemplo, espaço). A tokenização em nível de palavra ainda é uma boa ideia para esses casos? Por que ou por que não?
+
+Uma vez que é dito que os idiomas não possuem indicadores de limites de palavras, a tokenização com base nas palavras indicaria que a divisão dos tokens seria feita por meio da distinção do fim de uma palavra e o começo de outra. Logo, como não há como saber de forma simples como com um espaço qual o fim de uma palavra, a tokenização em nível de palavra não é satisfatória para esses casos. De acordo com [essa referência](https://www.datacamp.com/pt/blog/what-is-tokenization), uma forma de tokenizar as palavras sem considerar a separação das palavras é por meio da tokenização de caracteres, que é mais aconselhada por tokenizar a frase a cada caracter, não a cada palavra.
+
